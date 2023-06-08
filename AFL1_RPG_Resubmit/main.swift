@@ -11,8 +11,11 @@ var affirm = " "
 
 var playerHP = 100
 var playerMP = 50
+var playerShield = false
 var potions = 20
-var elixir = 0
+var elixir = 20
+
+var monsterHP = 500
 
 while(affirm != ""){
     print("Welcome to the world of magic! 🧙🏻‍♂️🧌")
@@ -50,9 +53,7 @@ while(loop == 0){
     
     if(choice.lowercased() == "c") {
         while(returns != ""){
-            print("Player name: \(name)")
-            print("\nHP: \(playerHP)/100")
-            print("MP: \(playerMP)/50")
+            ShowVitals()
             
             print("\nMagic:")
             print("- Physical Attack. No mana required. Deal 5pt of damage.")
@@ -83,11 +84,7 @@ while(loop == 0){
                         print("\nYou don't have any potion left. Be careful of your next journey.")
                         print("Press [return] to go back")
                         returns = String(readLine()!)
-                        if(returns != ""){
-                            check = true
-                        }else {
-                            check = false
-                        }
+                        check = Return(ret: returns)
                     }
                     
                 } else {
@@ -98,13 +95,7 @@ while(loop == 0){
                         var heal = "y"
                         var yesno = true
                         
-                        // Heal Action
-                        potions = potions - 1
-                        playerHP = playerHP + 20
-                        
-                        if(playerHP > 100){
-                            playerHP = 100
-                        }
+                        Heal()
                         
                         while(yesno){
                             
@@ -143,13 +134,225 @@ while(loop == 0){
             
         }
     } else if(choice.lowercased() == "f"){
+        print("As you enter the forest, you feel a sense of unease wash over you.")
+        print("Suddenly, you hear the sound of twigs snapping behind you. You quickly spin around, and find a Troll emerging from the shadows")
+        
+        var gameLoop = 1
+        
+        while(gameLoop != 0){
+            print("\n😈 Name: Troll x1")
+            print("😈 Health: \(monsterHP)")
+            
+            print("\nChoose your action:")
+            print("[1] Physical Attack. No mana required. Deal 5pt of damage.")
+            print("[2] Meteor. Use 15pt of MP. Deak 50pt of damage.")
+            print("[3] Shield. Use 10pt of MP. Block enemy's attack in 1 turn.")
+            
+            print("\n[4] Use Potion to heal wound")
+            print("[5] Use Elixir to refill MP")
+            print("[6] Show player's vital.")
+            print("[7] Flee from battle.")
+            let action = String(readLine()!)
+            
+            if(action == "1"){
+                monsterHP = monsterHP - 5
+                print("You used Physical Attack, the enemy loses 5 HP")
+                MonsterAction()
+                CheckWinLose()
+            }else if(action == "2"){
+                playerMP = playerHP - 15
+                monsterHP = monsterHP - 50
+                print("You used Meteor, the enemy loses 50 HP")
+                MonsterAction()
+                CheckWinLose()
+            }else if(action == "3"){
+                playerShield = true
+                print("You used Shield, you're invulnerable for 1 turn")
+                MonsterAction()
+                CheckWinLose()
+            }else if(action == "4"){
+                UsePotion()
+                MonsterAction()
+                CheckWinLose()
+            }else if(action == "5"){
+                UseElixir()
+                MonsterAction()
+                CheckWinLose()
+            }else if(action == "6"){
+                ShowVitals()
+                print("Keep at it, you're doing great!")
+            }else if(action == "7"){
+                var check = true
+                
+                while(check){
+                    print("You feel that if you don't escape soon, you won't be able to continue the fight.")
+                    print("You look around frantically, searching for a way out. You sprint towards the exit, your heart pounding in your chest.")
+                    print("You're safe, for now...")
+                    print("Press [return] to continue:")
+                    returns = String(readLine()!)
+                    check = Return(ret: returns)
+                }
+                gameLoop = 0
+                
+            } else {
+                print("Invalid Input")
+            }
+        }
+        
         
     } else if(choice.lowercased() == "m"){
+        print("As make your way through the rugged mountain terrain, you can feel the chill of the wind hitting at your skin.")
+        print("Suddenly, you hear a sound that makes you freeze in your tracks. THat's when you see it - a massive, snarling Golem emerging from the shadows.")
+        
+        var gameLoop = 1
+        
+        while(gameLoop != 0){
+            print("\n😈 Name: Golem x1")
+            print("😈 Health: \(monsterHP)")
+            
+            print("\nChoose your action:")
+            print("[1] Physical Attack. No mana required. Deal 5pt of damage.")
+            print("[2] Meteor. Use 15pt of MP. Deak 50pt of damage.")
+            print("[3] Shield. Use 10pt of MP. Block enemy's attack in 1 turn.")
+            
+            print("\n[4] Use Potion to heal wound")
+            print("[5] Use Elixir to refill MP")
+            print("[6] Show player's vital.")
+            print("[7] Flee from battle.")
+            let action = String(readLine()!)
+            
+            if(action == "1"){
+                monsterHP = monsterHP - 5
+                print("You used Physical Attack, the enemy loses 5 HP")
+                MonsterAction()
+                CheckWinLose()
+            }else if(action == "2"){
+                playerMP = playerHP - 15
+                monsterHP = monsterHP - 50
+                print("You used Meteor, the enemy loses 50 HP")
+                MonsterAction()
+                CheckWinLose()
+            }else if(action == "3"){
+                playerShield = true
+                print("You used Shield, you're invulnerable for 1 turn")
+                MonsterAction()
+                CheckWinLose()
+            }else if(action == "4"){
+                UsePotion()
+                MonsterAction()
+                CheckWinLose()
+            }else if(action == "5"){
+                UseElixir()
+                MonsterAction()
+                CheckWinLose()
+            }else if(action == "6"){
+                ShowVitals()
+                print("Keep at it, you're doing great!")
+            }else if(action == "7"){
+                var check = true
+                
+                while(check){
+                    print("You feel that if you don't escape soon, you won't be able to continue the fight.")
+                    print("You look around frantically, searching for a way out. You sprint towards the exit, your heart pounding in your chest.")
+                    print("You're safe, for now...")
+                    print("Press [return] to continue:")
+                    returns = String(readLine()!)
+                    check = Return(ret: returns)
+                }
+                gameLoop = 0
+                
+            } else {
+                print("Invalid Input")
+            }
+        }
         
     } else if(choice.lowercased() == "q"){
         print("Thanks for Playing!")
         exit(0)
     } else {
         print("Invalid Input!")
+    }
+    
+    func Heal(){
+        potions = potions - 1
+        playerHP = playerHP + 20
+        
+        if(playerHP > 100){
+            playerHP = 100
+        }
+    }
+    
+    func ShowVitals(){
+        print("Player name: \(name)")
+        print("\nHP: \(playerHP)/100")
+        print("MP: \(playerMP)/50")
+    }
+    
+    func MonsterAction(){
+        print("The monster launches a ferocious attack!")
+        if(playerShield){
+            print("The player is shielded from harm")
+        } else {
+            let enemyAttack = Int.random(in: 1...15)
+            if(enemyAttack <= 5){
+                playerHP = playerHP - enemyAttack
+                print("The enemy slipped, you got scraped for \(enemyAttack) damage")
+            } else if(enemyAttack <= 10 && enemyAttack > 5) {
+                playerHP = playerHP - enemyAttack
+                print("The enemy landed their attack, you got hit for \(enemyAttack) damage")
+            } else if(enemyAttack <= 15 && enemyAttack > 10) {
+                playerHP = playerHP - enemyAttack
+                print("The enemy landed a critical attack, you got hit for \(enemyAttack) damage")
+            }
+        }
+    }
+    
+    func CheckWinLose(){
+        if(playerHP <= 0 && monsterHP <= 0){
+            print("You both died, the game ends in a tie")
+            exit(0)
+        } else if(playerHP <= 0){
+            print("You died, better luck next time!")
+            exit(0)
+        } else if(monsterHP <= 0){
+            print("You beat your foe, YOU WIN!!")
+            print("Thanks for Playing!")
+            exit(0)
+        }
+    }
+    
+    func Return(ret:String) -> Bool{
+        var check = true
+        
+        if(returns != ""){
+            check = true
+        }else {
+            check = false
+        }
+        return check
+    }
+    
+    func UseElixir(){
+        if(elixir == 0){
+            print("You don't have enough elixir")
+        } else {
+            elixir = elixir - 1
+            playerMP = playerMP + 10
+            
+            if(playerMP <= 50){
+                playerMP = 50
+            }
+            
+            print("You used Elixir, you refill 10 MP")
+        }
+    }
+    
+    func UsePotion(){
+        if(potions == 0){
+            print("You don't have enough Potions")
+        } else {
+            Heal()
+        }
+        print("You used Potion, you healed 20 HP")
     }
 }
