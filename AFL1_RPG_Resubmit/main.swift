@@ -9,13 +9,9 @@ import Foundation
 
 var affirm = " "
 
-var playerHP = 100
-var playerMP = 50
-var playerShield = false
-var potions = 20
-var elixir = 20
-
-var monsterHP = 500
+let p = Player()
+let t = Troll(monsterHP: 500, monsterType: "Troll")
+let g = Golem(monsterHP: 1000, monsterType: "Golem")
 
 while(affirm != ""){
     print("Welcome to the world of magic! 🧙🏻‍♂️🧌")
@@ -53,7 +49,7 @@ while(loop == 0){
     
     if(choice.lowercased() == "c") {
         while(returns != ""){
-            ShowVitals()
+            p.ShowVitals()
             
             print("\nMagic:")
             print("- Physical Attack. No mana required. Deal 5pt of damage.")
@@ -69,15 +65,15 @@ while(loop == 0){
         }
     } else if(choice.lowercased() == "h"){
         while(returns != ""){
-            print("Your HP is \(playerHP).")
-            print("You have \(potions).")
+            print("Your HP is \(p.playerHP).")
+            print("You have \(p.potions).")
             
             print("\nAre you sure you want to use 1 potion to heal wound? [Y/N]")
             let yn = String(readLine()!)
             
             if(yn.lowercased() == "y"){
                 // Check if potions ran out
-                if(potions == 0){
+                if(p.potions == 0){
                     var check = true
                     
                     while(check){
@@ -95,19 +91,19 @@ while(loop == 0){
                         var heal = "y"
                         var yesno = true
                         
-                        Heal()
+                        p.Heal()
                         
                         while(yesno){
                             
-                            print("\nYour HP is now: \(playerHP)")
-                            print("You have \(potions) Potion left.")
+                            print("\nYour HP is now: \(p.playerHP)")
+                            print("You have \(p.potions) Potion left.")
                             
                             print("\nStill want to use 1 potion to heal wound again? [Y/N]")
                             heal = String(readLine()!)
                             if(heal.lowercased() == "y"){
                                 
                                 //Check if potions ran out
-                                if(potions == 0){
+                                if(p.potions == 0){
                                     print("You ran out of potions :(")
                                     yesno = false
                                     healLoop = false
@@ -141,7 +137,7 @@ while(loop == 0){
         
         while(gameLoop != 0){
             print("\n😈 Name: Troll x1")
-            print("😈 Health: \(monsterHP)")
+            print("😈 Health: \(t.monsterHP)")
             
             print("\nChoose your action:")
             print("[1] Physical Attack. No mana required. Deal 5pt of damage.")
@@ -155,31 +151,32 @@ while(loop == 0){
             let action = String(readLine()!)
             
             if(action == "1"){
-                monsterHP = monsterHP - 5
+                t.monsterHP = t.monsterHP - 5
                 print("You used Physical Attack, the enemy loses 5 HP")
-                MonsterAction()
-                CheckWinLose()
+                t.MonsterAttack()
+                t.CheckWinLose()
             }else if(action == "2"){
-                playerMP = playerHP - 15
-                monsterHP = monsterHP - 50
+                p.playerMP = p.playerMP - 15
+                t.monsterHP = t.monsterHP - 50
                 print("You used Meteor, the enemy loses 50 HP")
-                MonsterAction()
-                CheckWinLose()
+                t.MonsterAttack()
+                t.CheckWinLose()
             }else if(action == "3"){
-                playerShield = true
+                p.playerMP = p.playerMP - 10
+                p.playerShield = true
                 print("You used Shield, you're invulnerable for 1 turn")
-                MonsterAction()
-                CheckWinLose()
+                t.MonsterAttack()
+                t.CheckWinLose()
             }else if(action == "4"){
-                UsePotion()
-                MonsterAction()
-                CheckWinLose()
+                p.UsePotion()
+                t.MonsterAttack()
+                t.CheckWinLose()
             }else if(action == "5"){
-                UseElixir()
-                MonsterAction()
-                CheckWinLose()
+                p.UseElixir()
+                t.MonsterAttack()
+                t.CheckWinLose()
             }else if(action == "6"){
-                ShowVitals()
+                p.ShowVitals()
                 print("Keep at it, you're doing great!")
             }else if(action == "7"){
                 var check = true
@@ -208,7 +205,7 @@ while(loop == 0){
         
         while(gameLoop != 0){
             print("\n😈 Name: Golem x1")
-            print("😈 Health: \(monsterHP)")
+            print("😈 Health: \(g.monsterHP)")
             
             print("\nChoose your action:")
             print("[1] Physical Attack. No mana required. Deal 5pt of damage.")
@@ -222,31 +219,32 @@ while(loop == 0){
             let action = String(readLine()!)
             
             if(action == "1"){
-                monsterHP = monsterHP - 5
+                g.monsterHP = g.monsterHP - 5
                 print("You used Physical Attack, the enemy loses 5 HP")
-                MonsterAction()
-                CheckWinLose()
+                g.MonsterAttack()
+                t.CheckWinLose()
             }else if(action == "2"){
-                playerMP = playerHP - 15
-                monsterHP = monsterHP - 50
+                p.playerMP = p.playerMP - 15
+                g.monsterHP = g.monsterHP - 50
                 print("You used Meteor, the enemy loses 50 HP")
-                MonsterAction()
-                CheckWinLose()
+                g.MonsterAttack()
+                t.CheckWinLose()
             }else if(action == "3"){
-                playerShield = true
+                p.playerMP = p.playerMP - 10
+                p.playerShield = true
                 print("You used Shield, you're invulnerable for 1 turn")
-                MonsterAction()
-                CheckWinLose()
+                t.MonsterAttack()
+                t.CheckWinLose()
             }else if(action == "4"){
-                UsePotion()
-                MonsterAction()
-                CheckWinLose()
+                p.UsePotion()
+                t.MonsterAttack()
+                t.CheckWinLose()
             }else if(action == "5"){
-                UseElixir()
-                MonsterAction()
-                CheckWinLose()
+                p.UseElixir()
+                t.MonsterAttack()
+                t.CheckWinLose()
             }else if(action == "6"){
-                ShowVitals()
+                p.ShowVitals()
                 print("Keep at it, you're doing great!")
             }else if(action == "7"){
                 var check = true
@@ -273,54 +271,6 @@ while(loop == 0){
         print("Invalid Input!")
     }
     
-    func Heal(){
-        potions = potions - 1
-        playerHP = playerHP + 20
-        
-        if(playerHP > 100){
-            playerHP = 100
-        }
-    }
-    
-    func ShowVitals(){
-        print("Player name: \(name)")
-        print("\nHP: \(playerHP)/100")
-        print("MP: \(playerMP)/50")
-    }
-    
-    func MonsterAction(){
-        print("The monster launches a ferocious attack!")
-        if(playerShield){
-            print("The player is shielded from harm")
-        } else {
-            let enemyAttack = Int.random(in: 1...15)
-            if(enemyAttack <= 5){
-                playerHP = playerHP - enemyAttack
-                print("The enemy slipped, you got scraped for \(enemyAttack) damage")
-            } else if(enemyAttack <= 10 && enemyAttack > 5) {
-                playerHP = playerHP - enemyAttack
-                print("The enemy landed their attack, you got hit for \(enemyAttack) damage")
-            } else if(enemyAttack <= 15 && enemyAttack > 10) {
-                playerHP = playerHP - enemyAttack
-                print("The enemy landed a critical attack, you got hit for \(enemyAttack) damage")
-            }
-        }
-    }
-    
-    func CheckWinLose(){
-        if(playerHP <= 0 && monsterHP <= 0){
-            print("You both died, the game ends in a tie")
-            exit(0)
-        } else if(playerHP <= 0){
-            print("You died, better luck next time!")
-            exit(0)
-        } else if(monsterHP <= 0){
-            print("You beat your foe, YOU WIN!!")
-            print("Thanks for Playing!")
-            exit(0)
-        }
-    }
-    
     func Return(ret:String) -> Bool{
         var check = true
         
@@ -330,29 +280,5 @@ while(loop == 0){
             check = false
         }
         return check
-    }
-    
-    func UseElixir(){
-        if(elixir == 0){
-            print("You don't have enough elixir")
-        } else {
-            elixir = elixir - 1
-            playerMP = playerMP + 10
-            
-            if(playerMP <= 50){
-                playerMP = 50
-            }
-            
-            print("You used Elixir, you refill 10 MP")
-        }
-    }
-    
-    func UsePotion(){
-        if(potions == 0){
-            print("You don't have enough Potions")
-        } else {
-            Heal()
-        }
-        print("You used Potion, you healed 20 HP")
     }
 }
